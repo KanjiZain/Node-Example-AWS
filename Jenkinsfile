@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage("Verify Branch") {
            steps {
-            git branch: 'main', url: 'git@github.com:KanjiZain/Node-Example-AWS.git'
+            git branch: 'main', url: 'https://github.com/KanjiZain/Node-Example-AWS.git'
            }
         }
     }
