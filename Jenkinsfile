@@ -29,6 +29,7 @@ pipeline {
                         docker login -u $user -p $pass
                         docker push zainkanji/node-example-aws:${BUILD_NUMBER}
                         docker push zainkanji/node-example-aws:latest
+                        docker image rmi zainkanji/node-example-aws:${BUILD_NUMBER} zainkanji/node-example-aws:latest
                     """
                 }
             }
