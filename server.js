@@ -40,7 +40,7 @@ app.get("/about", (_req, res) => {
     res.send("Welcome to the Docker AWS Node demo service. Explore users, add new ones, or fetch a random highlight!");
 });
 
-app.get("/home", (_req, res) => {
+app.get("/", (_req, res) => {
     res.send("Home base for the Docker AWS Node demo service — your gateway to user adventures.");
 });
 

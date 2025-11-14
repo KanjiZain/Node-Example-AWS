@@ -35,14 +35,15 @@ pipeline {
             }
         }
 
-     stage("Deploy to AWS") {
-          steps {
-            sh """
-                docker stop node-example-aws || true
-                docker rm node-example-aws || true
-                docker run -d --name node-example-aws -p 3000:3000 zainkanji/node-example-aws:${BUILD_NUMBER}
-            """
+        stage("Deploy to AWS") {
+            steps {
+                sh """
+                    docker stop node-example-aws || true
+                    docker rm node-example-aws || true
+                    docker run -d --name node-example-aws -p 3000:3000 zainkanji/node-example-aws:${BUILD_NUMBER}
+                    """
+            echo 'Docker container deployed successfully'
+            }
         }
-     }
     }
 }
