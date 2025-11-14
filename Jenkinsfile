@@ -25,5 +25,15 @@ pipeline {
             echo 'Docker image built successfully'
            }
         }
+
+        withCredentials([usernamePassword(credentialsId: 'dockerId', passwordVariable: 'pass', usernameVariable: 'user')]) {
+            steps {
+                sh """
+                    docker login -u $user -p $pass
+                    docker image push zainkanji/node-example-aws:${BUILD_NUMBER}
+                    docker image push zainkanji/node-example-aws:latest
+                """
+            }
+        }
     }
 }
