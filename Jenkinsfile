@@ -15,8 +15,8 @@ pipeline {
         stage("Build Docker Image") {
            steps {
                sh """
-                    docker build -t zainkanji/node-example-aws:${BUILD_NUMBER} .
-                    docker tag zainkanji/node-example-aws:${BUILD_NUMBER} zainkanji/node-example-aws:latest
+                    docker build -t zainkanji/node-example-aws:latest .
+                    docker tag zainkanji/node-example-aws:latest zainkanji/node-example-aws:${BUILD_NUMBER}
                """
                echo 'Docker image built successfully'
            }
@@ -27,9 +27,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerId', passwordVariable: 'pass', usernameVariable: 'user')]) {
                     sh """
                         docker login -u $user -p $pass
-                        docker push zainkanji/node-example-aws:${BUILD_NUMBER}
                         docker push zainkanji/node-example-aws:latest
-                        docker image rmi zainkanji/node-example-aws:${BUILD_NUMBER} zainkanji/node-example-aws:latest
+                        # Optionally push versioned tag too:
+                        # docker push zainkanji/node-example-aws:${BUILD_NUMBER}
                     """
                 }
             }
@@ -40,9 +40,9 @@ pipeline {
                 sh """
                     docker stop node-example-aws || true
                     docker rm node-example-aws || true
-                    docker run -d --name node-example-aws -p 3000:3000 zainkanji/node-example-aws:${BUILD_NUMBER}
-                    """
-            echo 'Docker container deployed successfully'
+                    docker run -d --name node-example-aws -p 3000:3000 zainkanji/node-example-aws:latest
+                """
+                echo 'Docker container deployed successfully'
             }
         }
     }
